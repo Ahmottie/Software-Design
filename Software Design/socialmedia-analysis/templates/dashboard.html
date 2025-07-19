@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Dashboard</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">{{ platform }} Data</h1>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="{{ data.user_info.profile_pic_url }}" alt="Profile Image" class="img-fluid mb-3">
+                        <h5 class="card-title">{{ data.user_info.name }}</h5>
+                        <p class="card-text">Bio: {{ data.user_info.bio }}</p>
+                        <p class="card-text">User Id: {{ data.user_info.user_id }}</p>
+                        <p class="card-text">User Name: {{ data.user_info.username }}</p>
+                        <p class="card-text">Followers: {{ data.user_info.follower_count }}</p>
+                        <p class="card-text">Following: {{ data.user_info.following_count }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            {% for post in data.posts %}
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        {% if post.images %}
+                            <div id="carousel{{ loop.index }}" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    {% for image in post.images %}
+                                        <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                            <img src="{{ image }}" class="d-block w-100" alt="Post Image">
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <a class="carousel-control-prev" href="#carousel{{ loop.index }}" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carousel{{ loop.index }}" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <p class="card-text">{{ post.text }}</p>
+                            <p class="text-muted">Likes: {{ post.likes }}</p>
+                            <p class="text-muted">{{ post.created_at }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
